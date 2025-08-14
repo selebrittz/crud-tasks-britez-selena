@@ -1,7 +1,7 @@
-import { Sequelize, DataTypes, BOOLEAN } from 'sequelize';
+import { DataTypes} from 'sequelize';
+import sequelize from '../config/database.js';
 
-
-export const User = Sequelize.define('User', {
+export const User = sequelize.define('User', {
   
   id: {
     type: DataTypes.INTEGER,
@@ -18,9 +18,10 @@ export const User = Sequelize.define('User', {
     allowNull: false
   },
   isComplete: {
-    type: DataTypes.STRING, BOOLEAN,
+    type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false
   }
 });
+export default User;
 
