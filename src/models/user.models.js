@@ -26,12 +26,6 @@ export const User = sequelize.define('User', {
 });
 export default User;
 
-//relaciones de uno a muchos entre User y Task
+//relacion de uno a uno
 
-User.hasMany(Task, {
-  foreignKey: 'user_id' 
-});
-
-Task.belongsTo(User,{
-  foreignKey: 'user_id'
-});
+Task.belongsTo (User)
