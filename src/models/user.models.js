@@ -1,31 +1,27 @@
 import { DataTypes} from 'sequelize';
 import sequelize from '../config/database.js';
-import Task from './task.models.js';
 
-export const User = sequelize.define('User', {
-  
+export const UsersModel = sequelize.define('Users', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoincrement: true
+    autoIncrement: true
   },
-  title: {
+  name: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
+  email: {
     type: DataTypes.STRING(100),
     allowNull: false,
     unique: true
   },
-  descrption: {
-    type: DataTypes.STRING(100),
-    allowNull: false
-  },
-  isComplete: {
-    type: DataTypes.BOOLEAN,
+  password: {
+    type: DataTypes.STRING (100),
     allowNull: false,
-    defaultValue: false
   }
+}, {
+  timestamps: false
 });
-export default User;
 
-//relacion de uno a uno
-
-Task.belongsTo (User)
+//relaciones uno a uno

@@ -1,4 +1,4 @@
-import { User } from "../models/user.models.js";
+import { UsersModel } from "../models/user.models.js";
 
 export const createUser = async (req, res) => {
   try {
@@ -8,12 +8,12 @@ export const createUser = async (req, res) => {
       return res.status(400).json({ message: "Datos inválidos" });
     }
 
-    const existingUser = await User.findOne({ where: { email } });
+    const existingUser = await UsersModel.findOne({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ message: "El email ya está registrado" });
     }
 
-    const user = await User.create({ name, email, password });
+    const user = await UsersModel.create({ name, email, password });
     res.status(201).json({ message: "Usuario creado con éxito", user });
   } catch (error) {
     res.status(500).json({ message: "Error al crear usuario", error: error.message });
@@ -23,7 +23,7 @@ export const createUser = async (req, res) => {
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await User.findAll();
+    const users = await UsersModel.findAll();
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: "Error al obtener usuarios" });
@@ -33,7 +33,7 @@ export const getUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findByPk(id);
+    const user = await UsersModel.findByPk(id);
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
     res.status(200).json(user);
   } catch (error) {
@@ -53,7 +53,7 @@ export const updateUser = async (req, res) => {
       return res.status(400).json({ message: "Datos inválidos" });
     }
 
-    const emailExists = await User.findOne({ where: { email, id: { $ne: id } } });
+    const emailExists = await UsersModel.findOne({ where: { email, id: { $ne: id } } });
     if (emailExists) {
       return res.status(400).json({ message: "El email ya está registrado" });
     }
@@ -69,7 +69,7 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findByPk(id);
+    const user = await UsersModel.findByPk(id);
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
     await user.destroy();
@@ -78,3 +78,5 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ message: "Error al eliminar usuario" });
   }
 };
+
+

@@ -2,8 +2,11 @@ import express from 'express';
 import dotenv from 'dotenv';
 import taskRoutes from './src/routes/task.routes.js';
 import userRoutes from './src/routes/user.routes.js';   
-import { User } from './src/models/user.models.js';
-import { Task } from './src/models/task.models.js';
+import { UsersModel } from './src/models/user.models.js';
+import { TaskModel } from './src/models/task.models.js';
+import { ToolModel } from './src/models/tools.models.js';
+import { TiempoModel } from './src/models/tiempo.models.js';
+import { TaskToolsModel } from './src/models/taskTools.models.js';
 
 dotenv.config();
 
@@ -17,9 +20,12 @@ app.use("/api/tasks", taskRoutes);
 
 
 const startServer = async () => {
-  await User.sync(); 
-  await Task.sync();
-  console.log('Tablas user y task creada');
+  await TaskToolsModel.sync();
+  await ToolModel.sync();
+  await TiempoModel.sync();
+  await UsersModel.sync(); 
+  await TaskModel.sync();
+  console.log('Tablas creadas');
   console.log('Conexión a la base de datos establecida correctamente.');
  
 

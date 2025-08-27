@@ -1,20 +1,24 @@
 import { DataTypes } from "sequelize";  
-import sequelize from "../config/database";
+import sequelize from "../config/database.js";
+import { TaskModel } from "./task.models.js";
 
-export const Tiempo = sequelize.define ( "Tiempo", {
+export const TiempoModel = sequelize.define ( "Tiempo", {
     id: {
          type: DataTypes.INTEGER,
          primaryKey: true,
          autoIncrement: true 
     },
-    fechaAsignacion: {
-        type: DataTypes.DATE,
-        allowNull: false
+    fecha_asignacion: {
+         type: DataTypes.DATE,
+         allowNull: false
     },
-    fechaVencimiento: {
-        type: DataTypes.DATE,
-        allowNull: false
+    fecha_vencimiento: {
+         type: DataTypes.DATE,
+         allowNull: false
     }
 
  });
 
+//relacion de uno a uno 
+TaskModel.hasOne(TiempoModel, { foreignKey: "task_id" });
+TiempoModel.belongsTo(TaskModel, { foreignKey: "task_id" });
